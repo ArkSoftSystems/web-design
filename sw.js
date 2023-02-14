@@ -44,7 +44,7 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
     const cacheWhiteList = [CACHE_NAME];
     e.waitUntil(
-        caches.keys().then(cacheName => {
+        caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cacheName => {
                     if (cacheWhiteList.indexOf(cacheName) == -1) {
@@ -63,7 +63,7 @@ self.addEventListener('activate', e => {
 
 //fetch
 self.addEventListener('fetch', e => {
-    e.respondWith(caches.match(e.request)).then(res => {
+    caches.match(e.request).then(res => {
         if(res){
             return res;
         }
